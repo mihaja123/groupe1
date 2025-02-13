@@ -9,13 +9,13 @@ root.geometry("1000x1000")
 frame = tk.Frame(root)
 frame.pack(fill=tk.BOTH,expand=True)
 
-def clear_frame(window):
-    for widget in window.winfo_children():
+def clear_frame():
+    for widget in frame.winfo_children():
         widget.destroy()
 
-def page_auth(window):
+def page_auth():
     clear_frame()
-    new_window = auth(window)
+    auth(frame)
 
 label = tk.Label(frame,text="Mania",font=("Arial",17,"bold"),anchor="center")
 label.place(x=420,y=300)
