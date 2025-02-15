@@ -2,12 +2,14 @@ import tkinter as tk
 from tkinter import messagebox
 import mysql.connector
 
+
+
 def verifier_login(email, password):
     """ Vérifie les identifiants dans la base de données MySQL. """
     conn = mysql.connector.connect(
         host="localhost",
-        user="root",  # Remplace par ton utilisateur MySQL
-        password="",  # Remplace par ton mot de passe MySQL
+        user="root",  
+        password="", 
         database="mania_hotel"
     )
     cursor = conn.cursor()
@@ -15,6 +17,7 @@ def verifier_login(email, password):
     query = "SELECT * FROM users WHERE email = %s AND mot_de_passe = %s"
     cursor.execute(query, (email, password))
     user = cursor.fetchone()
+    print(user)
 
     cursor.close()
     conn.close()
@@ -27,6 +30,7 @@ def login(window, email_entry, password_entry):
     password = password_entry.get()
 
     if verifier_login(email, password):
+        from accueil import show_home
         messagebox.showinfo("Succès", "Connexion réussie !")
     else:
         messagebox.showerror("Erreur", "Identifiants incorrects")
@@ -35,6 +39,7 @@ def auth(window):
     # Effacer le contenu précédent
     for widget in window.winfo_children():
         widget.destroy()
+
 
     # Ajouter les widgets de l'authentification
     tk.Label(window, text="Connexion", font=("Arial", 20)).pack(pady=100)
