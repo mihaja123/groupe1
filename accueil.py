@@ -1,5 +1,5 @@
 import tkinter as tk
-from tkinter import PhotoImage
+from PIL import Image, ImageTk
 from authentification import auth
 
 def show_home(window):
@@ -19,11 +19,18 @@ def show_home(window):
     content = tk.Frame(main_frame, bg="white")
     content.pack(side=tk.RIGHT, fill=tk.BOTH, expand=True)
 
-    # --- Affichage du logo ---
-    logo = PhotoImage(file="E:\exo groupe\mania hotel")  
-    logo_label = tk.Label(sidebar, image=logo, bg="#2c8feb")
-    logo_label.image = logo  # Pour éviter la suppression par le garbage collector
-    logo_label.pack(pady=20)
+    # --- Chargement du logo ---
+    try:
+        logo_path = r"E:\exo groupe\mania hotel\logo.png"  # 🖼️ Mets ici le chemin correct du logo
+        logo_img = Image.open(logo_path)
+        logo_img = logo_img.resize((100, 100))  # Redimensionne si nécessaire
+        logo = ImageTk.PhotoImage(logo_img)
+
+        logo_label = tk.Label(sidebar, image=logo, bg="#2c8feb")
+        logo_label.image = logo  # 🔥 Important : empêche le garbage collector de supprimer l'image
+        logo_label.pack(pady=20)
+    except Exception as e:
+        print("Erreur lors du chargement du logo :", e)
 
     # --- Menu de navigation ---
     buttons = [
